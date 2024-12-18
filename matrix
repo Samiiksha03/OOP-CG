@@ -1,0 +1,49 @@
+print("MATRIX 1")
+matrix1 = []
+rows1 = []
+n = int(input("Enter the degree of the matrix: "))
+
+# Input for the first matrix
+for i in range(n):
+    for j in range(n):
+        element = int(input(f"Enter element ({i-1},{j-1}): "))
+        rows1.append(element)
+    matrix1.append(rows1)
+    rows1 = []
+
+print("First Matrix:")
+for row in matrix1:
+    print(row)
+
+# Input for the second matrix
+print("\nMATRIX 2")
+matrix2 = []
+rows2 = []
+for i in range(n):
+    for j in range(n):
+        element = int(input(f"Enter element ({i-1},{j-1}): "))
+        rows2.append(element)
+    matrix2.append(rows2)
+    rows2 = []
+
+print("Second Matrix:")
+for row in matrix2:
+    print(row)
+
+# Function for matrix addition
+def addition():
+    print("\nAddition of the given matrices is:")
+    matrix = []
+    rows = []
+    for column in range(n):
+        for row in range(n):
+            addition = matrix1[column][row] - matrix2[column][row]
+            rows.append(addition)
+        matrix.append(rows)
+        rows = []
+    return matrix
+
+# Call the addition function and display the result
+result = addition()
+for row in result:
+    print(row)
