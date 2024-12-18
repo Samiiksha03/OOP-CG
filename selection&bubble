@@ -1,0 +1,76 @@
+# Initialize an empty list to store percentages
+percentages = []
+
+# Input the number of students
+n = int(input("Enter the number of students whose percentages are to be displayed: "))
+print(f"Enter percentages for {n} students: ")
+
+# Append percentages (floating-point numbers) to the list
+for i in range(n):
+    ele = float(input())
+    percentages.append(ele)
+
+# Define Selection Sort function for floating-point numbers
+def Selection_Sort(array):
+    for i in range(len(array)):
+        min_idx = i
+        for j in range(i + 1, len(array)):
+            if array[min_idx] > array[j]:
+                min_idx = j
+        array[i], array[min_idx] = array[min_idx], array[i]
+    return array
+
+# Define Bubble Sort function for floating-point numbers
+def Bubble_Sort(array):
+    for i in range(len(array)):
+        for j in range(len(array) - i - 1):
+            if array[j] > array[j + 1]:
+                array[j], array[j + 1] = array[j + 1], array[j]
+    return array
+
+# Menu-driven program
+flag = 1
+while flag == 1:
+    print("\nMenu")
+    print("1) Sort percentages using Selection Sort")
+    print("2) Sort percentages using Bubble Sort")
+    print("3) Display Top 5 Scores\n")
+    
+    # Input the user's choice
+    choice = int(input("Choose an option number: "))
+    
+    if choice == 1:
+        # Perform Selection Sort
+        sorted_percentages = Selection_Sort(percentages[:])  # Use a copy of the list to avoid in-place sorting
+        print("Percentages sorted in ascending order (Selection Sort):", sorted_percentages)
+        
+        # Ask if the user wants to continue
+        cont = input("Continue? (y/n): ")
+        if cont.lower() == 'n':
+            flag = 0
+    
+    elif choice == 2:
+        # Perform Bubble Sort
+        sorted_percentages = Bubble_Sort(percentages[:])  # Use a copy of the list to avoid in-place sorting
+        print("Percentages sorted in ascending order (Bubble Sort):", sorted_percentages)
+        
+        # Ask if the user wants to continue
+        cont = input("Continue? (y/n): ")
+        if cont.lower() == 'n':
+            flag = 0
+    
+    elif choice == 3:
+        # Display Top 5 Scores
+        print("Top 5 scores are:")
+        sorted_percentages = Selection_Sort(percentages[:])  # Sort the list to find top 5 scores
+        for i in range(len(sorted_percentages) - 1, len(sorted_percentages) - 6, -1):
+            if i >= 0:
+                print(sorted_percentages[i])
+        
+        # Ask if the user wants to continue
+        cont = input("Continue? (y/n): ")
+        if cont.lower() == 'n':
+            flag = 0
+    
+    else:
+        print("Option not available.")
