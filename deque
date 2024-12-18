@@ -1,0 +1,184 @@
+#include<iostream>
+using namespace std;
+
+#define SIZE 5 // Define the maximum size of the dequeue
+
+class dequeue
+{
+    int a[SIZE], front, rear, count;
+
+public:
+    dequeue();                // Constructor to initialize variables
+    void add_at_beg(int);     // Function to add an element at the beginning
+    void add_at_end(int);     // Function to add an element at the end
+    void delete_fr_front();   // Function to delete an element from the front
+    void delete_fr_rear();    // Function to delete an element from the rear
+    void display();           // Function to display all elements in the dequeue
+};
+
+// Constructor definition to initialize the dequeue
+dequeue::dequeue()
+{
+    front = -1;
+    rear = -1;
+    count = 0;
+}
+
+// Function to add an element at the beginning of the dequeue
+void dequeue::add_at_beg(int item)
+{
+    if (front == -1)  // If the dequeue is empty
+    {
+        front++;
+        rear++;
+        a[rear] = item;
+        count++;
+    }
+    else if (front == 0)  // No space to insert at the beginning
+    {
+        cout << "\nInsertion is not possible, overflow!!!";
+    }
+    else
+    {
+        for (int i = count; i > 0; i--)
+        {
+            a[i] = a[i - 1];
+        }
+        a[0] = item;
+        front = 0;
+        count++;
+        rear++;
+    }
+}
+
+// Function to add an element at the end of the dequeue
+void dequeue::add_at_end(int item)
+{
+    if (front == -1)  // If the dequeue is empty
+    {
+        front++;
+        rear++;
+        a[rear] = item;
+        count++;
+    }
+    else if (rear >= SIZE - 1)  // No space to insert at the end
+    {
+        cout << "\nInsertion is not possible, overflow!!!";
+        return;
+    }
+    else
+    {
+        a[++rear] = item;
+        count++;
+    }
+}
+
+// Function to display all elements in the dequeue
+void dequeue::display()
+{
+    if (front == -1)
+    {
+        cout << "\nDequeue is empty!";
+        return;
+    }
+    cout << "\nElements in the Dequeue: ";
+    for (int i = front; i <= rear; i++)
+    {
+        cout << a[i] << " ";
+    }
+    cout << endl;
+}
+
+// Function to delete an element from the front of the dequeue
+void dequeue::delete_fr_front()
+{
+    if (front == -1)  // If the dequeue is empty
+    {
+        cout << "Deletion is not possible: Dequeue is empty";
+        return;
+    }
+    else
+    {
+        cout << "The deleted element is " << a[front] << endl;
+        if (front == rear)
+        {
+            front = rear = -1;  // If there was only one element, reset the dequeue
+        }
+        else
+        {
+            front++;  // Move the front pointer
+        }
+    }
+}
+
+// Function to delete an element from the rear of the dequeue
+void dequeue::delete_fr_rear()
+{
+    if (front == -1)  // If the dequeue is empty
+    {
+        cout << "Deletion is not possible: Dequeue is empty";
+        return;
+    }
+    else
+    {
+        cout << "The deleted element is " << a[rear] << endl;
+        if (front == rear)
+        {
+            front = rear = -1;  // If there was only one element, reset the dequeue
+        }
+        else
+        {
+            rear--;  // Move the rear pointer
+        }
+    }
+}
+
+// Main program to interact with the dequeue
+int main()
+{
+    int c, item;
+    dequeue d1;  // Create dequeue object
+
+    do
+    {
+        cout << "\n\n*** DEQUEUE OPERATIONS ***";
+        cout << "\n1 - Insert at beginning";
+        cout << "\n2 - Insert at end";
+        cout << "\n3 - Display";
+        cout << "\n4 - Deletion from front";
+        cout << "\n5 - Deletion from rear";
+        cout << "\n6 - Exit";
+        cout << "\nEnter your choice <1-6>: ";
+        cin >> c;
+
+        switch (c)
+        {
+        case 1:
+            cout << "Enter the element to be inserted: ";
+            cin >> item;
+            d1.add_at_beg(item);
+            break;
+        case 2:
+            cout << "Enter the element to be inserted: ";
+            cin >> item;
+            d1.add_at_end(item);
+            break;
+        case 3:
+            d1.display();
+            break;
+        case 4:
+            d1.delete_fr_front();
+            break;
+        case 5:
+            d1.delete_fr_rear();
+            break;
+        case 6:
+            return 0;  // Exit program
+        default:
+            cout << "Invalid choice!";
+            break;
+        }
+    } while (c != 6);  // Repeat until user chooses option 6
+
+    return 0;
+}
