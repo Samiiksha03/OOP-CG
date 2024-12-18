@@ -1,0 +1,36 @@
+def both_cricket_and_badminton(cricket, badminton):
+    """Returns students who play both cricket and badminton."""
+    return cricket.intersection(badminton)
+
+def either_cricket_or_badminton_not_both(cricket, badminton):
+    """Returns students who play either cricket or badminton but not both."""
+    return cricket.symmetric_difference(badminton)
+
+# Input data
+def get_students(group_name):
+    """Takes user input for a group and returns a set of student names."""
+    print(f"Enter the names of students in {group_name}, separated by spaces:")
+    return set(input().strip().split())
+
+group_A = get_students("Group A (Cricket)")
+group_B = get_students("Group B (Badminton)")
+
+# Menu for user choice
+while True:
+    print("\nChoose an option:")
+    print("1. List of students who play both cricket and badminton")
+    print("2. List of students who play either cricket or badminton but not both")
+    print("3. Quit")
+    choice = input("Enter your choice (1/2/3): ")
+
+    if choice == "1":
+        both = both_cricket_and_badminton(group_A, group_B)
+        print("Students who play both cricket and badminton:", both)
+    elif choice == "2":
+        either_not_both = either_cricket_or_badminton_not_both(group_A, group_B)
+        print("Students who play either cricket or badminton but not both:", either_not_both)
+    elif choice == "3":
+        print("Exiting the program.")
+        break
+    else:
+        print("Invalid choice. Please try again.")
