@@ -1,0 +1,141 @@
+#include <iostream>
+using namespace std;
+
+class cqueue
+{
+private:
+    int *arr;
+    int front, rear;
+    int MAX;
+
+public:
+    cqueue(int maxsize = 10); // Constructor declaration
+    void addq(int item);      // Function to add item to queue
+    int delq();               // Function to delete item from queue
+    void display();           // Function to display queue
+};
+
+// Constructor definition
+cqueue::cqueue(int maxsize)
+{
+    MAX = maxsize;
+    arr = new int[MAX]; // Dynamically allocate array of required size
+    front = rear = -1;
+    for (int i = 0; i < MAX; i++)
+        arr[i] = 0;
+}
+
+// Add item to queue
+void cqueue::addq(int item)
+{
+    if ((rear + 1) % MAX == front)
+    {
+        cout << "\nQueue is full"; // Queue is full
+        return;
+    }
+    rear = (rear + 1) % MAX;
+    arr[rear] = item;
+    if (front == -1)
+        front = 0;
+}
+
+// Delete item from queue
+int cqueue::delq()
+{
+    int data;
+    if (front == -1)
+    {
+        cout << "\nQueue is empty"; // Queue is empty
+        return '\0'; // Return null value
+    }
+    data = arr[front];
+    arr[front] = 0;
+    if (front == rear)
+    {
+        front = -1;
+        rear = -1;
+    }
+    else
+        front = (front + 1) % MAX;
+    return data;
+}
+
+// Display all orders in queue
+void cqueue::display()
+{
+    cout << endl;
+    for (int i = 0; i < MAX; i++)
+    {
+        switch (arr[i])
+        {
+        case 1:
+            cout << i + 1 << ". Onion pizza\n";
+            break;
+        case 2:
+            cout << i + 1 << ". Tomato pizza\n";
+            break;
+        case 3:
+            cout << i + 1 << ". Capsicum pizza\n";
+            break;
+        case 4:
+            cout << i + 1 << ". Cheese burst pizza\n";
+            break;
+        }
+    }
+}
+
+// Main program to interact with the queue
+int main()
+{
+    cqueue a; // Create queue object
+    int c, ch, data;
+    
+    do
+    {
+        cout << "\n\nEnter: \n1: Place order\n2: Display orders\n3: To check order being served now\n4: Exit\n";
+        cin >> ch;
+        
+        switch (ch)
+        {
+        case 1:
+            cout << "\nEnter type of pizza: \n1: Onion pizza\n2: Tomato pizza\n3: Capsicum pizza\n4: Cheese burst pizza";
+            cin >> c;
+            a.addq(c); // Place order
+            break;
+
+        case 2:
+            cout << "\nPizza orders are: ";
+            a.display(); // Display all orders
+            break;
+
+        case 3:
+            data = a.delq(); // Serve the order
+            if (data)
+            {
+                cout << "\nThe order being served now is: ";
+                switch (data)
+                {
+                case 1:
+                    cout << "Onion pizza\n";
+                    break;
+                case 2:
+                    cout << "Tomato pizza\n";
+                    break;
+                case 3:
+                    cout << "Capsicum pizza\n";
+                    break;
+                case 4:
+                    cout << "Cheese burst pizza\n";
+                    break;
+                }
+            }
+            break;
+
+        case 4:
+            return 0; // Exit program
+
+        default:
+            cout << "\nInvalid choice"; // Invalid option
+        }
+    } while (ch != 4); // Repeat until user chooses option 4
+}
