@@ -1,0 +1,250 @@
+#include<iostream>
+#include<string.h>
+#include<stdlib.h>
+using namespace std;
+
+class node {
+public:
+    int prn;
+    string name;
+    node* link;
+    
+    node() {
+        link = NULL;
+    }
+};
+
+class linkedlist {
+    node* start;
+
+public:
+    linkedlist() {
+        start = NULL;
+    }
+
+    // Insert President
+    void insert_President() {
+        node* tmp = new node();
+        int pr;
+        string nm;
+        cout << "Enter PRN and Name:\n";
+        cin >> pr >> nm;
+        tmp->prn = pr;
+        tmp->name = nm;
+        tmp->link = NULL;
+        if (start == NULL)
+            start = tmp;
+        else {
+            tmp->link = start;
+            start = tmp;
+        }
+        display();
+    }
+
+    // Insert Secretary
+    void insert_Secretary() {
+        node* tmp = new node();
+        int pr;
+        string nm;
+        cout << "Enter PRN and Name:\n";
+        cin >> pr >> nm;
+        tmp->prn = pr;
+        tmp->name = nm;
+        tmp->link = NULL;
+        if (start == NULL)
+            start = tmp;
+        else {
+            node* q = start;
+            while (q->link != NULL)
+                q = q->link;
+            q->link = tmp;
+        }
+        display();
+    }
+
+    // Insert Member
+    void insert_Member() {
+        display();
+        int pr, index;
+        string nm;
+        node* q, * tmp;
+        tmp = new node();
+        cout << "Enter PRN and Name:\n";
+        cin >> pr >> nm;
+        tmp->prn = pr;
+        tmp->name = nm;
+        tmp->link = NULL;
+
+        if (start == NULL) {
+            cout << "List is empty!\n";
+        } else {
+            cout << "Enter index after which element to be inserted: ";
+            cin >> index;
+            q = start;
+            for (int i = 0; i < index; i++) {
+                q = q->link;
+                if (q == NULL) {
+                    cout << "Index out of bounds!\n";
+                    return;
+                }
+            }
+            tmp->link = q->link;
+            q->link = tmp;
+        }
+        display();
+    }
+
+    // Delete President
+    void del_President() {
+        if (start == NULL) {
+            cout << "List is empty!\n";
+            return;
+        }
+        node* tmp = start;
+        start = start->link;
+        free(tmp);
+        display();
+    }
+
+    // Delete Secretary
+    void del_Secretary() {
+        if (start == NULL) {
+            cout << "List is empty!\n";
+            return;
+        }
+        node* q = start;
+        node* tmp = start;
+        while (tmp->link != NULL) {
+            q = tmp;
+            tmp = tmp->link;
+        }
+        q->link = NULL;
+        free(tmp);
+        display();
+    }
+
+    // Delete Member
+    void del_Member() {
+        int pr;
+        cout << "Enter PRN to be deleted: ";
+        cin >> pr;
+        node* q = start;
+        node* tmp = start;
+
+        while (tmp != NULL) {
+            if (tmp->prn == pr) {
+                if (tmp == start) {
+                    start = tmp->link;
+                } else {
+                    q->link = tmp->link;
+                }
+                free(tmp);
+                break;
+            }
+            q = tmp;
+            tmp = tmp->link;
+        }
+        display();
+    }
+
+    // Display List
+    void display() {
+        if (start == NULL)
+            cout << "Club is empty!!\n";
+        else {
+            cout << "** Members in Club **\n";
+            node* q = start;
+            while (q != NULL) {
+                cout << q->prn << " " << q->name << endl;
+                q = q->link;
+            }
+        }
+    }
+
+    // Count Members
+    void count() {
+        int i = 0;
+        node* q = start;
+        while (q != NULL) {
+            i++;
+            q = q->link;
+        }
+        cout << "Total number of members in club: " << i << endl;
+    }
+
+    // Reverse List
+    void reverse1() {
+        reverse(start);
+    }
+
+    // Concatenate Two Lists
+    void concat(linkedlist l1, linkedlist l2) {
+        node* ptr = l1.start;
+        while (ptr->link != NULL)
+            ptr = ptr->link;
+        ptr->link = l2.start;
+        l1.display();
+    }
+
+    // Reverse Helper Function (for reverse1)
+    void reverse(node* start) {
+        node* prev = NULL;
+        node* current = start;
+        node* next = NULL;
+        while (current != NULL) {
+            next = current->link;
+            current->link = prev;
+            prev = current;
+            current = next;
+        }
+        start = prev;
+        display();
+    }
+};
+
+int main() {
+    linkedlist l1, l2;
+    int ch;
+    cout << "\n***Linked List Operations***\n";
+    cout << "1. Insert President\n2. Insert Secretary\n3. Insert Member\n4. Delete President\n5. Delete Secretary\n6. Delete Member\n7. Display\n8. Count\n9. Concat\n10. Exit\n";
+
+    while (1) {
+        cout << "\nEnter Your Choice: ";
+        cin >> ch;
+        switch (ch) {
+        case 1:
+            l1.insert_President();
+            break;
+        case 2:
+            l1.insert_Secretary();
+            break;
+        case 3:
+            l1.insert_Member();
+            break;
+        case 4:
+            l1.del_President();
+            break;
+        case 5:
+            l1.del_Secretary();
+            break;
+        case 6:
+            l1.del_Member();
+            break;
+        case 7:
+            l1.display();
+            break;
+        case 8:
+            l1.count();
+            break;
+        case 9:
+            l1.concat(l1, l2);
+            break;
+        case 10:
+            exit(0);
+        default:
+            cout << "Wrong Choice!!\n";
+        }
+    }
+
+    return 0;
+}
